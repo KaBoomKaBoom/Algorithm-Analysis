@@ -1,6 +1,6 @@
 class Algorithms:
 
-    def partition(array, low, high):
+    def partition(self, array, low, high):
         pivot = array[high]
         i = low - 1
         for j in range(low, high):
@@ -10,13 +10,13 @@ class Algorithms:
         (array[i + 1], array[high]) = (array[high], array[i + 1])
         return i + 1
 
-    def quick_sort(array, low, high):
+    def quicksort(self, array, low, high):
         if low < high:
-            pi = partition(array, low, high)
-            quicksort(array, low, pi - 1)
-            quicksort(array, pi + 1, high)
+            pi = Algorithms.partition(self, array, low, high)
+            Algorithms.quicksort(self, array, low, pi - 1)
+            Algorithms.quicksort(self, array, pi + 1, high)
     
-    def heapify(arr, N, i):
+    def heapify(self, arr, N, i):
         largest = i 
         l = 2 * i + 1
         r = 2 * i + 2    
@@ -30,19 +30,19 @@ class Algorithms:
         if largest != i:
             arr[i], arr[largest] = arr[largest], arr[i] 
     
-            heapify(arr, N, largest)
+            Algorithms.heapify(self, arr, N, largest)
 
-    def heap_sort(arr):
+    def heap_sort(self, arr):
         N = len(arr)
  
         for i in range(N//2 - 1, -1, -1):
-            heapify(arr, N, i)
+            Algorithms.heapify(self, arr, N, i)
     
         for i in range(N-1, 0, -1):
             arr[i], arr[0] = arr[0], arr[i] 
-            heapify(arr, i, 0)
+            Algorithms.heapify(self, arr, i, 0)
 
-    def mergeSort(arr):
+    def mergeSort(self, arr):
         if len(arr) > 1:
             mid = len(arr)//2
 
@@ -50,9 +50,9 @@ class Algorithms:
     
             R = arr[mid:]
     
-            mergeSort(L)
+            Algorithms.mergeSort(self, L)
     
-            mergeSort(R)
+            Algorithms.mergeSort(self, R)
     
             i = j = k = 0
     
@@ -74,3 +74,25 @@ class Algorithms:
                 arr[k] = R[j]
                 j += 1
                 k += 1
+
+    def count_sort(self, input_array):
+
+        M = max(input_array)
+        count_array = [0] * (M + 1)
+    
+        # Mapping each element of input_array as an index of count_array
+        for num in input_array:
+            count_array[num] += 1
+    
+        # Calculating prefix sum at every index of count_array
+        for i in range(1, M + 1):
+            count_array[i] += count_array[i - 1]
+    
+        # Creating output_array from count_array
+        output_array = [0] * len(input_array)
+    
+        for i in range(len(input_array) - 1, -1, -1):
+            output_array[count_array[input_array[i]] - 1] = input_array[i]
+            count_array[input_array[i]] -= 1
+    
+        return output_array

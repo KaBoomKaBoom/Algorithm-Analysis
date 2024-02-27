@@ -6,49 +6,47 @@ import random
 
 alg = Algorithms.Algorithms()
 el = [1000, 5000, 10000,20000,30000,40000, 50000, 100000]
-arr = [[random.randint(0, 100) for _ in range(length)] for length in el]
+arr = [[random.randint(0, 100000) for _ in range(length)] for length in el]
 
-# for i in arr:
-#     print(i)
-# timeQuick = []
-# for i in arr:
-#     N = len(i)-1
-#     start = time.perf_counter()
-#     alg.quicksort(i,0,N)
-#     end = time.perf_counter()
-#     timeQuick.append(end - start)
-# plt.plot(el, timeQuick, label="Quick Sort")
-# plt.xlabel('Input Size')
-# plt.ylabel('Time')
-# plt.title('Execution Time')
-# plt.legend()
-# plt.show()
+timeQuick = []
+for i in arr:
+    N = len(i)-1
+    start = time.perf_counter()
+    alg.quicksort(i,0,N)
+    end = time.perf_counter()
+    timeQuick.append(end - start)
+plt.plot(el, timeQuick, label="Quick Sort")
+plt.xlabel('Input Size')
+plt.ylabel('Time')
+plt.title('Execution Time')
+plt.legend()
+plt.show()
 
-# timeHeap = []
-# for i in arr:
-#     start = time.perf_counter()
-#     alg.heap_sort(i)
-#     end = time.perf_counter()
-#     timeHeap.append(end - start)
-# plt.plot(el, timeHeap, label="Heap Sort")
-# plt.xlabel('Input Size')
-# plt.ylabel('Time')
-# plt.title('Execution Time')
-# plt.legend()
-# plt.show()
+timeHeap = []
+for i in arr:
+    start = time.perf_counter()
+    alg.heap_sort(i)
+    end = time.perf_counter()
+    timeHeap.append(end - start)
+plt.plot(el, timeHeap, label="Heap Sort")
+plt.xlabel('Input Size')
+plt.ylabel('Time')
+plt.title('Execution Time')
+plt.legend()
+plt.show()
 
-# timeMerge = []
-# for i in arr:
-#     start = time.perf_counter()
-#     alg.mergeSort(i)
-#     end = time.perf_counter()
-#     timeMerge.append(end - start)
-# plt.plot(el, timeMerge, label="Merge Sort")
-# plt.xlabel('Input Size')
-# plt.ylabel('Time')
-# plt.title('Execution Time')
-# plt.legend()
-# plt.show()
+timeMerge = []
+for i in arr:
+    start = time.perf_counter()
+    alg.mergeSort(i)
+    end = time.perf_counter()
+    timeMerge.append(end - start)
+plt.plot(el, timeMerge, label="Merge Sort")
+plt.xlabel('Input Size')
+plt.ylabel('Time')
+plt.title('Execution Time')
+plt.legend()
+plt.show()
 
 timeCount = []
 for i in arr:

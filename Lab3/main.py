@@ -1,64 +1,62 @@
 import time
 import matplotlib.pyplot as plt
-from Algorithms import Graph
+from Algorithms import GraphDFS, GraphBFS
 import pandas as pd
+from networkx.generators.random_graphs import erdos_renyi_graph
 
-graph1 = Graph()
-graph1.addEdge(1, 2)
-graph1.addEdge(1, 3)
-graph1.addEdge(2, 4)
-graph1.addEdge(3, 4)
-
-graph2 = Graph()
-graph2.addEdge(1, 2)
-graph2.addEdge(1, 3)
-graph2.addEdge(2, 4)
-graph2.addEdge(2, 5)
-graph2.addEdge(3, 5)
-graph2.addEdge(4, 5)
-
-graph3 = Graph()
-graph3.addEdge(1, 2)
-graph3.addEdge(1, 3)
-graph3.addEdge(2, 4)
-graph3.addEdge(2, 5)
-graph3.addEdge(3, 5)
-graph3.addEdge(4, 6)
-graph3.addEdge(5, 6)
-
-graph4 = Graph()
-graph4.addEdge(1, 2)
-graph4.addEdge(1, 3)
-graph4.addEdge(2, 4)
-graph4.addEdge(2, 5)
-graph4.addEdge(3, 5)
-graph4.addEdge(4, 6)
-graph4.addEdge(5, 6)
-graph4.addEdge(3, 6)
-
-graph5 = Graph()
-graph5.addEdge(1, 2)
-graph5.addEdge(1, 3)
-graph5.addEdge(2, 4)
-graph5.addEdge(2, 5)
-graph5.addEdge(3, 5)
-graph5.addEdge(4, 6)
-graph5.addEdge(5, 6)
-graph5.addEdge(6, 7)
-
-graphs=[graph1, graph2, graph3, graph4, graph5]
+values=[ 4, 8, 16, 32, 64, 128, 256, 512]
 timeDFS = []
 timeBFS = []
-for i in range(5):
+for i in values:
+    g = erdos_renyi_graph(i, 0.5)
+    graph = GraphDFS()
+    for a in g.edges:
+        n,e = a
+        graph.addEdge(n,e)
     start = time.perf_counter()
-    graphs[i].DFS(1)
+    graph.DFS(0)
     end = time.perf_counter()
     timeDFS.append(end - start)
 
-print(timeDFS)
-plt.plot([1,2,3,4,5], timeDFS ,label="DFS")
-plt.xlabel('test')
+plt.plot(values, timeDFS ,label="Deapth First Search")
+plt.xlabel('Number of nodes')
 plt.ylabel('Time')
 plt.title('Execution Time')
 plt.legend()
 plt.show()
+
+for i in values:
+    g = erdos_renyi_graph(i, 0.5)
+    graph = GraphBFS()
+    for a in g.edges:
+        n,e = a
+        graph.addEdge(n,e)
+    start = time.perf_counter()
+    graph.bfs(0)
+    end = time.perf_counter()
+    timeBFS.append(end - start)
+
+plt.plot(values, timeBFS ,label="Breadth First Search")
+plt.xlabel('Number of nodes')
+plt.ylabel('Time')
+plt.title('Execution Time')
+plt.legend()
+plt.show()
+
+plt.plot(values, timeDFS ,label="Deapth First Search")
+plt.plot(values, timeBFS ,label="Breadth First Search")
+plt.xlabel('Number of nodes')
+plt.ylabel('Time (seconds)')
+plt.title('Graph Traversal Algorithms')
+plt.legend()  # Adding legend
+plt.show()
+
+data = []
+for i in range(len(values)):
+    n = values[i]
+    data.append([n, timeDFS[i], timeBFS[i]])
+
+# Display results in a tables
+headers = ["Input Size", 'DFS', 'BFS']
+df = pd.DataFrame(data, columns=headers)
+print(df)
